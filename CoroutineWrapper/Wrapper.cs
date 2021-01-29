@@ -6,7 +6,7 @@ namespace CoroutineWrapper
 {
 	public delegate void Callback();
 
-	static class CoroutineWrapper
+	static public class CoroutineWrapper
 	{
 		/// <summary>
 		/// Waits for a given number of seconds then executes the <see cref="Callback"/>.
