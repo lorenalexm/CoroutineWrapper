@@ -5,6 +5,7 @@ This project attempts to wrap the [coroutine](https://docs.unity3d.com/ScriptRef
 Usage of this library should follow Unity standards for starting a coroutine.
 
 ```csharp
+// C#
 private void Start()
 {
     StartCoroutine(CoroutineWrapper.WaitForSeconds(1f, () => { Debug.Log("Inside a coroutine!"); }))
@@ -12,6 +13,7 @@ private void Start()
 ```
 
 ```swift
+// Swift
 private func Start() {
     StartCoroutine(CoroutineWrapper.WaitForSeconds(0.5) {
         Debug.Log("Inside a coroutine!")
