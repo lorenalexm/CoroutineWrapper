@@ -58,5 +58,40 @@ namespace CoroutineWrapper
 				}
 			}
 		}
+
+		/// <summary>
+		/// Enters into a loop until the value is lesser or greater than the limit, processed every frame.
+		/// Loop condition is determined by the value being lower or higher than the limit.
+		/// </summary>
+		/// <param name="value">Value to pass to the loopHandler <see cref="Delegate"/></param>
+		/// <param name="limit">Upper or lower limit to be compared to the value</param>
+		/// <param name="adjustedBy">Amount the value will be changed each cycle</param>
+		/// <param name="loopHandler"><see cref="Delegate"/> to be executed within the loop. Expects a <see cref="float"/> parameter</param>
+		/// <param name="postHandler">Optional <see cref="Delegate"/> to be executed after the loop completes</param>
+		/// <returns></returns>
+		static public IEnumerator LoopUntil(float value, float limit, float adjustedBy, Callback loopHandler, Callback postHandler = null)
+		{
+			if(value > limit)
+			{
+				while (value >= limit)
+				{
+					value -= adjustedBy;
+					loopHandler();
+					yield return new WaitForEndOfFrame();
+				}
+			}
+			else
+			{
+				while (value <= limit)
+				{
+					value += adjustedBy;
+					loopHandler();
+					yield return new WaitForEndOfFrame();
+				}
+			}
+			
+
+			postHandler?.Invoke();
+		}
 	}
 }
