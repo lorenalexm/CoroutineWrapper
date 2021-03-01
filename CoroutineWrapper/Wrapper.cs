@@ -66,9 +66,9 @@ namespace CoroutineWrapper
 		/// <param name="value">Value to pass to the loopHandler <see cref="Delegate"/></param>
 		/// <param name="limit">Upper or lower limit to be compared to the value</param>
 		/// <param name="adjustedBy">Amount the value will be changed each cycle</param>
-		/// <param name="loopHandler"><see cref="Delegate"/> to be executed within the loop. Expects a <see cref="float"/> parameter</param>
+		/// <param name="loopHandler"><see cref="Delegate"/> to be executed within the loop.</param>
 		/// <param name="postHandler">Optional <see cref="Delegate"/> to be executed after the loop completes</param>
-		/// <returns></returns>
+		/// <returns><see cref="IEnumerator"/></returns>
 		static public IEnumerator LoopUntil(float value, float limit, float adjustedBy, Callback loopHandler, Callback postHandler = null)
 		{
 			if(value > limit)
@@ -92,6 +92,36 @@ namespace CoroutineWrapper
 			
 
 			postHandler?.Invoke();
+		}
+
+		/// <summary>
+		/// Enters into a loop until the value is equal
+		/// </summary>
+		/// <param name="value">Value to pass to the loopHandler <see cref="Delegate"/></param>
+		/// <param name="equals">Boolean value to compare to the value parameter</param>
+		/// <param name="loopHandler"><see cref="Delegate"/> to be executed within the loop.</param>
+		/// <param name="postHandler">Optional <see cref="Delegate"/> to be executed after the loop completes</param>
+		/// <returns><see cref="IEnumerator"/></returns>
+		static public IEnumerator LoopUntil(bool value, bool equals, Callback loopHandler, Callback postHandler = null)
+		{
+			while(value != equals)
+			{
+				loopHandler();
+				yield return null;
+			}
+
+			postHandler?.Invoke();
+		}
+
+		/// <summary>
+		/// Starts a one-off coroutine to run in the background
+		/// </summary>
+		/// <param name="loopHandler"><see cref="Delegate"/> to be executed.</param>
+		/// <returns><see cref="IEnumerator"/></returns>
+		static public IEnumerator Background(Callback loopHandler)
+		{
+			loopHandler();
+			yield return null;
 		}
 	}
 }
